@@ -1,5 +1,7 @@
 package basics;
 
+import kotlin.Pair;
+
 public class MaxMin {
     public int[] getTop3Max(int[] arr) {
         int first = Integer.MIN_VALUE;
@@ -49,5 +51,19 @@ public class MaxMin {
         result[2] = third;
         return result;
 
+    }
+
+    public Pair<Integer, Integer> getMaxMin(int [] arr){
+        int max= Integer.MIN_VALUE;
+        int min = Integer.MAX_VALUE;
+
+        for(int d:arr){
+            if (d<min){
+                min = d;
+            }else if (d>max){
+                max = d;
+            }
+        }
+        return new Pair<>(max,min);
     }
 }

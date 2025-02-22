@@ -1,4 +1,5 @@
 import basics.*;
+import kotlin.Pair;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -122,5 +123,18 @@ public class Main {
             System.out.print(i + " ");
         }
 
+        System.out.println();
+        System.out.println("Find max min in single iteration");
+        Pair<Integer, Integer> p = obj9.getMaxMin(arrToFindMaxMin);
+        System.out.print(p.getFirst() + " " + p.getSecond());
+
+        System.out.println();
+        System.out.println("Sort zero to end");
+        Sort obj10 = new Sort();
+        int[] arrToSort = {500, 21,0, 900, 300, 55, 9,0};
+        int[] sortedArrayWithZero = obj10.sortZeros(arrToSort);
+        for (int i:sortedArrayWithZero){
+            System.out.print(i + " ");
+        }
     }
 }
