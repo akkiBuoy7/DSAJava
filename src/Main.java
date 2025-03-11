@@ -1,4 +1,6 @@
 import basics.*;
+import basics.algos.BinarySearch;
+import basics.algos.Sorting;
 import kotlin.Pair;
 
 import java.util.ArrayList;
@@ -136,5 +138,26 @@ public class Main {
         for (int i:sortedArrayWithZero){
             System.out.print(i + " ");
         }
+
+        System.out.println();
+        System.out.println("Binary Search:");
+        int[] binaryArray = {10,20,63,105,500};
+        BinarySearch binarySearch = new BinarySearch();
+        int  targetIndexBinary = binarySearch.binarySearch(binaryArray,15);
+        if (targetIndexBinary==-1){
+            System.out.println("Not found in binary search");
+        }else {
+            System.out.println("Index of the target in binary search is :"+targetIndexBinary);
+        }
+
+        System.out.println();
+        System.out.println("Binary Search:");
+        int[] bubbleArraySort = {103,200,63,105,50};
+        Sorting sorting = new Sorting();
+        int [] bubbleSortedArray = sorting.bubbleSort(bubbleArraySort);
+        for (int i:bubbleSortedArray){
+            System.out.print(i + " ");
+        }
+
     }
 }
