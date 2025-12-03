@@ -1,5 +1,7 @@
 package advance;
 
+import java.util.Arrays;
+
 public class Arrays_1 {
     public static void main(String[] args) {
         int ans1 = problem1();
@@ -9,7 +11,25 @@ public class Arrays_1 {
         System.out.println("The max value of the function is " + ans2);
 
         int ans3 = problem3();
-        System.out.println("The max sum of the sub array is " + ans3);
+        System.out.println("The max sum of the prefix sub array is " + ans3);
+
+        int ans4 = problem4();
+        System.out.println("The max sum of the sub array is " + ans4);
+
+        int ans4_1 = problem4_1();
+        System.out.println("The max sum of the sub array using Kadane’s Algorithm is " + ans4_1);
+
+        int N = 7;
+        int[][] queries = {
+                {1, 3},
+                {4, 2},
+                {3, 1}
+        };
+
+        int[] result = problem5(N, queries);
+        System.out.println("Final Array: " + Arrays.toString(result));
+        // Expected output: [0, 2, 5, 6, 6, 6, 6]
+
     }
 
     private static int problem1() {
@@ -110,9 +130,107 @@ public class Arrays_1 {
         return ans;
     }
 
+    private static int problem4() {
+        /*
+        Given an array , find the sub array that has the max sum
+        prefix => should start for 0 index
+        sub array => should be continuous of the parent array
+
+
+        sol => find the sum of all the index from every element in the array
+         */
+
+        // TC -> O(N2)
+
+        int[] a = {10, -5, 7, 8, -1, 2, -20, 5};
+        int pref;
+        int ans = Integer.MIN_VALUE;
+        int end = 0;
+        int start = 0;
+        for (int i = 0; i < a.length; i++) {
+            pref = 0;
+            for (int j = i; j < a.length; j++) {
+                pref += a[j];
+                if (pref > ans) {
+                    ans = pref;
+                    start = i;
+                    end = j;
+                }
+            }
+        }
+        int[] subArray = getSubArray(start, end, a);
+        for (int k : subArray) {
+            System.out.print(k + "  ");
+        }
+        System.out.println();
+        return ans;
+    }
+
+    private static int problem4_1() {
+        //Kadane’s Algorithm
+        int[] a = {10, -5, 7, 8, -20, -10, 3, 6, -10, 5};
+        //int [] a = {-3,-5,-2,-8};
+        int pref = 0;
+        int ans = Integer.MIN_VALUE;
+        int end = 0;
+        int start = 0;
+        int tempStart = 0;  // temp start when pref resets
+
+        // TC -> O(N)
+
+        for (int i = 0; i < a.length; i++) {
+            pref += a[i];
+            if (pref > ans) {
+                ans = pref;
+                start = tempStart;
+                end = i;
+            }
+            if (pref < 0) {
+                pref = 0;
+                tempStart = i + 1;
+            }
+        }
+        int[] subArray = getSubArray(start, end, a);
+        for (int k : subArray) {
+            System.out.print(k + "  ");
+        }
+        System.out.println();
+        return ans;
+    }
+
+    // Apply queries of the form (i, x) -> add x to A[i..N-1]
+    public static int[] problem5(int N, int[][] queries) {
+        int[] diff = new int[N];  // difference array of size N
+
+        // Apply all queries
+        for (int[] q : queries) {
+            int i = q[0];
+            int x = q[1];
+            diff[i] = x; // just update the index with the value
+        }
+        System.out.println("Diff array is "+Arrays.toString(diff));
+        // Build final array using prefix sum
+        int[] result = new int[N];
+        int pref = 0;
+        for (int i = 0; i < N; i++) {
+            pref += diff[i]; //prefix sum
+            result[i] = pref;
+        }
+
+        return result;
+    }
+
     private static int[] getSubArray(int end, int[] a) {
         int[] result = new int[end + 1];
         for (int i = 0; i <= end; i++) {
+            result[i] = a[i];
+        }
+        return result;
+    }
+
+    private static int[] getSubArray(int start, int end, int[] a) {
+        int[] result = new int[end + 1];
+        for (int i = start; i <= end; i++) {
             result[i] = a[i];
         }
         return result;
