@@ -20,6 +20,7 @@ public class Arrays_1 {
         System.out.println("The max sum of the sub array using Kadane’s Algorithm is " + ans4_1);
 
         int N = 7;
+        // add 3 at index 1
         int[][] queries = {
                 {1, 3},
                 {4, 2},
@@ -29,6 +30,17 @@ public class Arrays_1 {
         int[] result = problem5(N, queries);
         System.out.println("Final Array: " + Arrays.toString(result));
         // Expected output: [0, 2, 5, 6, 6, 6, 6]
+
+        int N1 = 7;
+        // add 2 at indices 1 and 3
+        int[][] queries1 = {
+                {1, 3, 2},
+                {2, 5, 3},
+                {5, 6, 5}
+        };
+
+        int[] result1 = problem5_1(N, queries1);
+        System.out.println("Final Array: " + Arrays.toString(result1));
 
     }
 
@@ -198,6 +210,10 @@ public class Arrays_1 {
         return ans;
     }
 
+    private static void queryProblem(int A, int[][] queries) {
+
+    }
+
     // Apply queries of the form (i, x) -> add x to A[i..N-1]
     public static int[] problem5(int N, int[][] queries) {
         int[] diff = new int[N];  // difference array of size N
@@ -208,7 +224,36 @@ public class Arrays_1 {
             int x = q[1];
             diff[i] = x; // just update the index with the value
         }
-        System.out.println("Diff array is "+Arrays.toString(diff));
+        System.out.println("Diff array is " + Arrays.toString(diff));
+        // Build final array using prefix sum
+        int[] result = new int[N];
+        int pref = 0;
+        for (int i = 0; i < N; i++) {
+            pref += diff[i]; //prefix sum
+            result[i] = pref;
+        }
+
+        return result;
+    }
+
+
+    public static int[] problem5_1(int N, int[][] queries) {
+        int[] diff = new int[N];  // difference array of size N
+
+        // Apply all queries
+        for (int[] q : queries) {
+            int i = q[0];
+            int j = q[1];
+            int x = q[2];
+
+
+            diff[i] = x;
+            if (j+1<N){
+                diff[j+1] = -x;
+            }
+
+        }
+        System.out.println("Diff array is " + Arrays.toString(diff));
         // Build final array using prefix sum
         int[] result = new int[N];
         int pref = 0;
