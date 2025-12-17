@@ -4,10 +4,14 @@ import java.util.Arrays;
 
 public class Arrays_2 {
     public static void main(String[] args) {
-        findMatrixSumBrute();
-        findSum1D();
-        findMatrixSumPref();
-        findAllSubMatrixSum();
+//        findMatrixSumBrute();
+//        findSum1D();
+//        findMatrixSumPref();
+//        findAllSubMatrixSum();
+//        transpose();
+//        rotate90();
+        checkAscendingSubArray(1,5);
+        checkAscendingSubArray(3,5);
     }
 
     public static void findSum1D() {
@@ -102,6 +106,8 @@ public class Arrays_2 {
 
     public static void findAllSubMatrixSum() {
         /*
+        for every top right matrix we can have a bottom left matrix
+        so no of sub matrix i-jth can be part will be # top * # bottom
         Sum  =  contribution og i-jth element in the total sum
                 E(i-jth element * all submatrix i-jth element is part of)
                 a[i][j] * ( { [i+1] * [j+1] }* { [N-i] * [M-j] } )
@@ -125,5 +131,118 @@ public class Arrays_2 {
         }
         System.out.println();
         System.out.println("findAllSubMatrixSum >>>All Sub matrix sum is " + ans);
+    }
+
+
+    public static void transpose() {
+        int[][] a = {
+                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
+        };
+
+        System.out.println("Given array is >>>");
+
+        for (int[] i : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                if (i > j) {
+                    int temp = a[i][j];
+                    a[i][j] = a[j][i];
+                    a[j][i] = temp;
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("Transposed array is >>>");
+        for (int[] i : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void rotate90() {
+        int[][] a = {
+                {1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 14, 15, 16}
+        };
+
+        System.out.println("Given array is >>>");
+
+        for (int[] i : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                if (i > j) {
+                    int temp = a[i][j];
+                    a[i][j] = a[j][i];
+                    a[j][i] = temp;
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("Transposed array is >>>");
+        for (int[] i : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+        for (int i = 0; i < a.length; i++) {
+            int[] row = a[i];
+            int left = 0;
+            int right = a[0].length - 1;
+            while (left < right) {
+                int temp = row[left];
+                row[left] = row[right];
+                row[right] = temp;
+                left++;
+                right--;
+            }
+        }
+        System.out.println();
+        System.out.println("90 degree array is >>>");
+        for (int[] i : a) {
+            for (int j : i) {
+                System.out.print(j + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public static void checkAscendingSubArray(int sx,int ex) {
+
+        int[] a = {1, 3, 6, 5, 10, 15, 12, 6, 10};
+        int[] d = new int[a.length];
+        int pre = 0;
+
+        for (int i=1;i<a.length;i++){
+            if (a[i]<a[i-1]){
+                d[i] = 1;
+            }else {
+                d[i] = 0;
+            }
+            pre+= d[i];
+            d[i] = pre;
+        }
+
+        System.out.println("Diff array >>"+Arrays.toString(d));
+
+        if ((d[ex] - d[sx])==0){
+            System.out.println("YES ascending");
+        }else {
+            System.out.println("NOT ascending");
+        }
+
     }
 }
