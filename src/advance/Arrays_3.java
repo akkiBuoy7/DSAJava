@@ -1,12 +1,15 @@
 package advance;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Arrays_3 {
     public static void main(String[] args) {
 
         maxDiffRight();
         waterTrap();
+        interval();
     }
 
 
@@ -20,9 +23,9 @@ public class Arrays_3 {
         int ans = Integer.MIN_VALUE;
         int N = a.length;
         int[] maxRight = new int[a.length];
-        maxRight[N-1] = a[N-1];
+        maxRight[N - 1] = a[N - 1];
         for (int i = N - 1; i >= 0; i--) {
-            ans = Math.max(a[i],ans);
+            ans = Math.max(a[i], ans);
             // p[i] = ans;
 
             maxRight[i] = ans - a[i];
@@ -66,6 +69,37 @@ public class Arrays_3 {
         }
 
         System.out.println("Total water is " + water);
+    }
+
+    public static void interval() {
+        int[][] intervals = {
+                {0, 2}, {1, 4}, {5, 6}, {6, 8}, {7, 10}, {13, 15}
+        };
+
+        List<int[]> result = new ArrayList<>();
+
+        int S = intervals[0][0];
+        int E = intervals[0][1];
+
+        for (int i=1;i<intervals.length;i++){
+            int start = intervals[i][0];
+            int end = intervals[i][1];
+
+            if (start<=E){
+                // overlapping
+                E = Math.max(end,E);
+            }else {
+               // not overlapping
+               result.add(new int[]{S,E});
+               S = start;
+               E = end;
+            }
+        }
+        result.add(new int[]{S,E});
+
+        for (int[] a:result){
+            System.out.println(Arrays.toString(a));
+        }
     }
 
 }
