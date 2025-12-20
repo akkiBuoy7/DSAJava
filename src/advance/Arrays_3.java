@@ -18,16 +18,16 @@ public class Arrays_3 {
         int[] a = {6, 3, 2, 4, 1, 3, 5, 3, 4};
         //int [] p = new int[a.length];
         int ans = Integer.MIN_VALUE;
-        int[] max_ht_diff = new int[a.length];
-        for (int i = a.length - 1; i >= 0; i--) {
-            if (a[i] > ans) {
-                ans = a[i];
-            }
+        int N = a.length;
+        int[] maxRight = new int[a.length];
+        maxRight[N-1] = a[N-1];
+        for (int i = N - 1; i >= 0; i--) {
+            ans = Math.max(a[i],ans);
             // p[i] = ans;
 
-            max_ht_diff[i] = ans - a[i];
+            maxRight[i] = ans - a[i];
         }
-        System.out.println("height max diff array >> " + Arrays.toString(max_ht_diff));
+        System.out.println("height max diff array >> " + Arrays.toString(maxRight));
 
     }
 
