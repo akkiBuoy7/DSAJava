@@ -10,8 +10,8 @@ public class Arrays_2 {
 //        findAllSubMatrixSum();
 //        transpose();
 //        rotate90();
-        checkAscendingSubArray(1,5);
-        checkAscendingSubArray(3,5);
+        checkAscendingSubArray(1, 5);
+        checkAscendingSubArray(3, 5);
     }
 
     public static void findSum1D() {
@@ -220,27 +220,27 @@ public class Arrays_2 {
         }
     }
 
-    public static void checkAscendingSubArray(int sx,int ex) {
+    public static void checkAscendingSubArray(int sx, int ex) {
 
         int[] a = {1, 3, 6, 5, 10, 15, 12, 6, 10};
         int[] d = new int[a.length];
         int pre = 0;
 
-        for (int i=1;i<a.length;i++){
-            if (a[i]<a[i-1]){
+        for (int i = 1; i < a.length; i++) {
+            if (a[i] < a[i - 1]) {
                 d[i] = 1;
-            }else {
+            } else {
                 d[i] = 0;
             }
-            pre+= d[i];
+            pre += d[i];
             d[i] = pre;
         }
 
-        System.out.println("Diff array >>"+Arrays.toString(d));
+        System.out.println("Diff array >>" + Arrays.toString(d));
 
-        if ((d[ex] - d[sx])==0){
+        if ((d[ex] - d[sx]) == 0) {
             System.out.println("YES ascending");
-        }else {
+        } else {
             System.out.println("NOT ascending");
         }
 
