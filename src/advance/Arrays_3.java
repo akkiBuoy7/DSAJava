@@ -156,6 +156,7 @@ public class Arrays_3 {
     }
 
 
+
     public static void firstMissingPositive() {
 
         /*
@@ -164,7 +165,7 @@ public class Arrays_3 {
         S(C) = O(N)
          */
 
-        int[] A = {10, 3, 1, 2, 5, -8, -3, 4};
+        int[] A = {6, 3, 1, 100, 5, -1, 4, 8};
 
         int N = A.length;
         int ans = -1;
@@ -172,14 +173,14 @@ public class Arrays_3 {
         int[] visited = new int[N + 1];
 
         // mark presence
-        for (int i = 0; i < N; i++) {
-            if (A[i] > 0 && A[i] <= N) {
-                visited[A[i]] = 1;
+        for (int j : A) {
+            if (j > 0 && j <= N) {
+                visited[j] = 1; // v[j] = 1 => j is present in A
             }
         }
 
         // find first missing positive
-        for (int i = 1; i <= N; i++) {
+        for (int i = 1; i <= N; i++) { // ignore 0 as it is not +ve
             if (visited[i] == 0) {
                 ans = i;
                 break;
@@ -189,6 +190,7 @@ public class Arrays_3 {
         if (ans != -1) {
             System.out.println("Missing no is " + ans);
         } else {
+            // if all nos are +ve in A then next available no is missing i.e. N+1
             System.out.println("Missing no is " + (N + 1));
         }
     }
