@@ -10,6 +10,9 @@ public class Arrays_3 {
         maxDiffRight();
         waterTrap();
         interval();
+        interval_1();
+        firstMissingPositive();
+        firstMissingPositive_1();
     }
 
 
@@ -72,6 +75,12 @@ public class Arrays_3 {
     }
 
     public static void interval() {
+
+        /*
+        Given sorted list of intervals
+        FInd all overlapping intervals and merge them
+         */
+
         int[][] intervals = {
                 {0, 2}, {1, 4}, {5, 6}, {6, 8}, {7, 10}, {13, 15}
         };
@@ -81,25 +90,143 @@ public class Arrays_3 {
         int S = intervals[0][0];
         int E = intervals[0][1];
 
-        for (int i=1;i<intervals.length;i++){
+        for (int i = 1; i < intervals.length; i++) {
             int start = intervals[i][0];
             int end = intervals[i][1];
 
-            if (start<=E){
+            if (start <= E) {
                 // overlapping
-                E = Math.max(end,E);
-            }else {
-               // not overlapping
-               result.add(new int[]{S,E});
-               S = start;
-               E = end;
+                E = Math.max(end, E);
+            } else {
+                // not overlapping
+                result.add(new int[]{S, E});
+                S = start;
+                E = end;
             }
         }
-        result.add(new int[]{S,E});
+        result.add(new int[]{S, E});
 
-        for (int[] a:result){
+        for (int[] a : result) {
             System.out.println(Arrays.toString(a));
         }
     }
+
+    public static void interval_1() {
+        /*
+        Given set of non overlapping intervals sorted with start time
+        insert a new nterval so that the final list is sorted
+         */
+
+        int[][] intervals = {
+                {0, 2}, {4, 7}, {8, 9}, {10, 11}, {12, 14}
+        };
+
+        int[] Q = {5, 10};
+
+        int L = Q[0];
+        int R = Q[1];
+
+        List<int[]> result = new ArrayList<>();
+
+        for (int i = 0; i < intervals.length; i++) {
+            int start = intervals[i][0];
+            int end = intervals[i][1];
+
+            if (start <= R && L <= end) {
+                // overlapping
+                L = Math.min(L, start);
+                R = Math.max(R, end);
+            } else {
+                // not overlapping
+                result.add(new int[]{start, end});
+            }
+        }
+        // insert merged interval in sorted order
+        int idx = 0;
+        while (idx < result.size() && result.get(idx)[0] < L) {
+            idx++;
+        }
+        result.add(idx, new int[]{L, R});
+
+        for (int[] a : result) {
+            System.out.print(Arrays.toString(a) + " ");
+        }
+        System.out.println();
+
+    }
+
+
+    public static void firstMissingPositive() {
+
+        /*
+        Find the fist missing positive integer in the array
+        T(C) = O(N)
+        S(C) = O(N)
+         */
+
+        int[] A = {10, 3, 1, 2, 5, -8, -3, 4};
+
+        int N = A.length;
+        int ans = -1;
+
+        int[] visited = new int[N + 1];
+
+        // mark presence
+        for (int i = 0; i < N; i++) {
+            if (A[i] > 0 && A[i] <= N) {
+                visited[A[i]] = 1;
+            }
+        }
+
+        // find first missing positive
+        for (int i = 1; i <= N; i++) {
+            if (visited[i] == 0) {
+                ans = i;
+                break;
+            }
+        }
+
+        if (ans != -1) {
+            System.out.println("Missing no is " + ans);
+        } else {
+            System.out.println("Missing no is " + (N + 1));
+        }
+    }
+
+    public static void firstMissingPositive_1() {
+
+        int[] A = {10, 3, 1, 2, 5, -8, -3, 4};
+        int N = A.length;
+        int ans = -1;
+        int i = 0;
+        while (i < N) {
+            int correctIndex = A[i] - 1;
+
+            if (A[i] > 0 && A[i] <= N && A[i] != A[correctIndex]) {
+                // swap A[i] with A[correctIndex]
+                int temp = A[i];
+                A[i] = A[correctIndex];
+                A[correctIndex] = temp;
+            } else {
+                i++;
+            }
+        }
+
+        // find first missing
+        for (i = 0; i < N; i++) {
+            if (A[i] != i + 1) {
+                ans = i+1;
+                break;
+            }
+        }
+
+        if (ans != -1) {
+            System.out.println("Missing no is " + ans);
+        } else {
+            System.out.println("Missing no is " + (N + 1));
+        }
+
+    }
+
 
 }
