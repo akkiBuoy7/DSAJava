@@ -1,4 +1,4 @@
-package advance;
+package advance.module1;
 
 public class GCD {
     public static void main(String[] args) {
