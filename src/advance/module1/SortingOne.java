@@ -1,7 +1,6 @@
 package advance.module1;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class SortingOne {
 
@@ -34,6 +33,17 @@ public class SortingOne {
 
         System.out.println();
         System.out.println("==============");
+
+        int[] arr = {4, 5, 1, 2, 6, 3};
+
+        long inversions = mergeSortInv(0, arr.length - 1, arr);
+
+        System.out.println("Sorted Array:");
+        for (int x : arr) {
+            System.out.print(x + " ");
+        }
+
+        System.out.println("\nInversion Count = " + inversions);
     }
 
     private static int[] selectionSort(int[] a) {
@@ -157,6 +167,62 @@ public class SortingOne {
 //         Copy remaining elements if any
         while (i < n1) arr[k++] = L[i++];
         while (j < n2) arr[k++] = R[j++];
+    }
+
+
+    /*
+    given an array find the no of inversions .
+    inversions =>
+    i<j & A[i] > A[j]
+    if jth(right) element is smaller and picked while merging or sorting
+    then all the remaining elements from i to middle on the left forms inversion with the jth
+    element
+     */
+    static long mergeSortInv(int st, int end, int[] a) {
+        long invCount = 0;
+        if (st < end) {
+            int mid = st + (end - st) / 2;
+            invCount += mergeSortInv(st, mid, a);
+            invCount += mergeSortInv(mid + 1, end, a);
+            invCount += mergeInv(st, mid, end, a);
+        }
+
+        return invCount;
+    }
+
+    static long mergeInv(int st, int mid, int end, int[] a) {
+        long invCount = 0;
+        int n1 = (mid - st) + 1;
+        int n2 = (end - mid);
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        for (int i = 0; i < n1; i++) {
+            L[i] = a[st + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = a[mid + 1 + j];
+        }
+
+        int i = 0, j = 0, k = st;
+
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                a[k++] = L[i++];
+            } else {
+                a[k++] = R[j++];
+                invCount += (n1 - i);
+            }
+        }
+        while (i < n1) {
+            a[k++] = L[i++];
+        }
+
+        while (j < n2) {
+            a[k++] = R[j++];
+        }
+
+        return invCount;
     }
 
 }
