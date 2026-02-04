@@ -1,6 +1,7 @@
 package advance.module1;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SortingOne {
 
@@ -44,6 +45,16 @@ public class SortingOne {
         }
 
         System.out.println("\nInversion Count = " + inversions);
+
+        int[] stream = {7, 2, 10, 8, 12};
+        int[] a5 = new int[stream.length];
+        int n = 0;
+
+        for (int x : stream) {
+            n = insertSort(a5, n, x);
+            System.out.println("After inserting " + x + " -> "
+                    + Arrays.toString(Arrays.copyOf(a5, n)));
+        }
     }
 
     private static int[] selectionSort(int[] a) {
@@ -223,6 +234,24 @@ public class SortingOne {
         }
 
         return invCount;
+    }
+
+    /*
+    Given a stream of integers place them in the array such that
+    they are sorted in the final array
+     */
+
+    static int insertSort(int[] a, int n, int x) {
+        int i = n;
+        for (i = n; i > 0; i--) {
+            if (a[i-1]>x){
+                a[i] = a[i-1];
+            }else {
+                break;
+            }
+        }
+        a[i] = x;
+        return n++;
     }
 
 }
