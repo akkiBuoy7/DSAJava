@@ -11,6 +11,7 @@ public class MaxMin {
 
         for (int v : arr) {
             if (v > first) {
+
                 third = second;
                 second = first;
                 first = v;
