@@ -1,9 +1,9 @@
-package advance.module1;
+package advance.module1.assignments;
 
 import java.util.Arrays;
 
 
-public class Assignments {
+public class Arrays_1_assignments {
     public static void main(String[] args) {
         int[][] devotee = {{1, 2, 10}, {2, 3, 20}, {2, 5, 25}};
         int beggersN = 5;
